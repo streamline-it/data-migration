@@ -5,10 +5,14 @@ data-migration
 
 Migrates files from source to destination.  Multiple source/destionations can be used.  Two methods can be used for migrating the data.
 
+
 Set data-migration_mode = 
 
+
 s - Uses ansible.posix.synchronize module.  Make sure data is mounted to the ansible control node.
+
 c - Uses ansible.builtin.copy module.  Be sure the data is mounted on the remote host
+
 
 data-migration_mountpoint
 
@@ -23,9 +27,12 @@ Role Variables
 --------------
 
 # data-migration_mode values
+
 #  s = Use syncrhonize module
+
 #  c = Use copy module 
 #
+
 data-migration_mode: s
 
 # Where data is mounted
