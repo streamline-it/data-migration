@@ -1,0 +1,31 @@
+---
+# tasks file for data-migration
+
+- name: import task to install needed package(s)
+  when: data_migration_mode == 's'
+  ansible.builtin.include_tasks: "{{ ansible_os_family }}_install_pkgs.yml"
+
+- name: ensure needed distination directories are created
+  loop:
+    "{{ data_migration_destination_dirs }}"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+
+- name: ensure files are migrated (synchronize module)
+  when: data_migration_mode == 's'
+  loop:
+    "{{ data_migration_directories }}"
+  ansible.posix.synchronize:
+    archive: true
+    src: "{{ item['src'] }}"
+    dest: "{{ item['dest'] }}"
+
+- name: ensure files are migrated (copy module)
+  when: data_migration_mode == 'c'
+  loop:
+    "{{ data_migration_directories }}"
+  ansible.builtin.copy:
+    src: "{{ item['src'] }}"
+    dest: "{{ item['dest'] }}"
+    remote_src: true

@@ -1,0 +1,15 @@
+---
+- name: ensure rsync is installed (dnf)
+  when: >
+    ansible_distribution_major_version == '7' or
+    ansible_distribution_major_version == '8' or
+    ansible_distribution_major_version == '9'
+  ansible.builtin.dnf:
+    name: rsync
+    state: present
+
+- name: ensure rsync is installed (yum)
+  when: ansible_distribution_major_version == '6'
+  ansible.builtin.dnf:
+    name: rsync
+    state: present

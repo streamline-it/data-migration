@@ -1,0 +1,22 @@
+---
+# defaults file for data_migration
+
+#data_migration_mode values
+#  s = Use syncrhonize module
+#  c = Use copy module 
+#
+data_migration_mode: s
+
+# Where data is mounted
+data_migration_source_mountpoint:
+
+# where data will be migrated to
+data_migration_destination_dirs: 
+  - /exp/cifs
+
+# list of sources and distinations to migrate files from/to
+data_migration_directories:
+  - src: "{{ data_migration_source_mountpoint }}/"
+    dest: ""
+  - src: "{{ data_migration_source_mountpoint }}/"
+    dest: ""
