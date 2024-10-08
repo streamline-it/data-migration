@@ -1,0 +1,5 @@
+---
+- name: ensure rsync is installed (pkgng)
+  ansible.builtin.pkgng:
+    name: rsync
+    state: present
