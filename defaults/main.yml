@@ -22,5 +22,5 @@ data_migration_directories:
     owner:
   - src: "{{ data_migration_source_mountpoint }}/"
     dest: ""
-    group:
     owner:
+    group:
