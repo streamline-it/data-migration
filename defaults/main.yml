@@ -18,5 +18,9 @@ data_migration_destination_dirs:
 data_migration_directories:
   - src: "{{ data_migration_source_mountpoint }}/"
     dest: ""
+    group:
+    owner:
   - src: "{{ data_migration_source_mountpoint }}/"
     dest: ""
+    group:
+    owner:
