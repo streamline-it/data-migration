@@ -33,7 +33,7 @@
     remote_src: true
 
 - name: ensure shell script exists
-  when: data_migration_mode: == "t"
+  when: data_migration_mode == "t"
   ansible.builtin.template:
     src: remote_copy_script.sh.j2
     dest: "{{ data_script_destionation }}"
