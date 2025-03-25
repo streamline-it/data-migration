@@ -13,6 +13,8 @@ s - Uses ansible.posix.synchronize module.  Make sure data is mounted to the ans
 
 c - Uses ansible.builtin.copy module.  Be sure the data is mounted on the remote host
 
+t - Uses the created shell script
+
 
 data-migration_mountpoint
 
@@ -32,8 +34,12 @@ Role Variables
 
 #  c = Use copy module 
 #
+#  t = Use created shell script to migrate the data
 
 data-migration_mode: s
+
+# Where script exists to be executed
+data_script_destination: /root/copy_shell_script.sh
 
 # Where data is mounted
 data-migration_source_mountpoint:

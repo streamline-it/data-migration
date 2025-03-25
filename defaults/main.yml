@@ -4,8 +4,10 @@
 #data_migration_mode values
 #  s = Use syncrhonize module
 #  c = Use copy module 
+#  t = Use shell script
 #
 data_migration_mode: s
+data_script_destination: /root/copy_shell_script.sh
 
 # Where data is mounted
 data_migration_source_mountpoint:
