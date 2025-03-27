@@ -1,0 +1,8 @@
+#{{ ansible_managed }}
+
+{{ data_migration_shebang }}
+
+{%- for item in data_migration_directories %}
+cp -a {{ item['src'] }}* {{ item['dest'] }}
+{% endfor %}
+

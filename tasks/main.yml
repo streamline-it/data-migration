@@ -1,6 +1,9 @@
 ---
 # tasks file for data-migration
 
+- name: include OS specific variables
+  ansible.builtin.include_vars: "{{ ansible_os_family.yml }}"
+
 - name: import task to install needed package(s)
   when: data_migration_mode == 's'
   ansible.builtin.include_tasks: "{{ ansible_os_family }}_install_pkgs.yml"
