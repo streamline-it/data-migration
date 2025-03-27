@@ -7,7 +7,8 @@
 #  t = Use shell script
 #
 data_migration_mode: s
-data_script_destination: /root/copy_shell_script.sh
+data_script_filename: copy_shell_script.sh
+data_script_destination: "/root/{{ data_script_filename }}"
 
 # Where data is mounted
 data_migration_source_mountpoint:

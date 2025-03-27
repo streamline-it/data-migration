@@ -38,14 +38,16 @@ Role Variables
 
 data-migration_mode: s
 
+data-migration_script_filename: copy_shell_script.sh
+
 # Where script exists to be executed
-data_script_destination: /root/copy_shell_script.sh
+data_migration_script_destination: "/root/{{ data_migration_script_filename }}"
 
 # Where data is mounted
-data-migration_source_mountpoint:
+data_migration_source_mountpoint:
 
 # list of sources and distinations to migrate files from/to
-data-migration_directories:
+data_migration_directories:
   - src: "{{ data-migration_source_mountpoint }}/"
     dest:
   - src: "{{ data-migration_source_mountpoint }}/"
