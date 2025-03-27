@@ -47,4 +47,9 @@
 - name: run the backup shell script to migrate the data
   when: data_migration_mode == "t"
   ansible.builtin.shell:
-    cmd: "./{{ data_migration_script_filename }}"
+    cmd: "{{ data_migration_script_destination }}"
+
+- name: ensure that the copy script is removed
+  ansible.builtin.file:
+    path: "{{ data_migration_script_destination }}"
+    state: absent
