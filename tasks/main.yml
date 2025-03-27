@@ -46,5 +46,5 @@
 
 - name: run the backup shell script to migrate the data
   when: data_migration_mode == "t"
-  ansible.builtin.command:
+  ansible.builtin.shell:
     cmd: "./{{ data_migration_script_filename }}"
