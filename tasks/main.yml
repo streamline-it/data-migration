@@ -1,5 +1,5 @@
 ---
-# tasks file for data-migration
+# tasks file for data-migrationOB
 
 - name: include OS specific variables
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
@@ -8,7 +8,17 @@
   when: data_migration_mode == 's'
   ansible.builtin.include_tasks: "{{ ansible_os_family }}_install_pkgs.yml"
 
-- name: ensure needed distination directories are created
+- name: ensure destination directory variables are defined
+  ansible.builtin.assert:
+    that: data_migration_destination_dirs is defined
+    fail_msg: "Make sure to define data_migration_destination_dirs variable"
+
+- name: ensure data_migration_directories is defined
+  ansible.builtin.assert:
+    that: data_migration_directories is defined
+    fail_msg: "Make sure to define data_migration_directories variable."
+
+- name: ensure needed destination directories are created
   loop:
     "{{ data_migration_destination_dirs }}"
   ansible.builtin.file:
