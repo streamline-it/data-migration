@@ -1,0 +1,29 @@
+- name: ensure the mode variable is defined
+  ansible.builtin.assert:
+    that: 
+      - data_migration_mode is defined
+      - data_migration_mode is truthy
+      - data_migration_mode == "s' or data_migration_mode == "c" or data_migration_mode == "t"
+    fail_msg: "Ensure the data_migration_mode variable is defined and has a correct value"
+
+- name: ensure key variables are defined/have values
+  when: data_migration_mode == "s" or data_migration_mode == "c"
+  ansible.builtin.assert:
+    that:
+      - data_migration_source_mountpoint is defined
+      - data_migration_source_mountpoint is truthy
+      - data_migration_destination_dirs is defined
+      - data_migration_destination_dirs is truthy
+      - data_migration_directories is defined
+      - data_migration_directories is truthy
+    fail_msg: "Make sure these variables are defined and values set"
+
+- name: ensure script variables are defined if using this method
+  when: data_migration_mode == "t"
+  ansible.builtin.assert:
+    that:
+      - data_migration_script_filename is defined
+      - data_migration_script_filename is truthy
+      - data_migration_script_destination is defined
+      - data_migration_script_destination is truth
+    fail_msg: "Esure scripting values are definded and values are set"y

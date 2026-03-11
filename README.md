@@ -3,7 +3,7 @@ Role Name
 
 data-migration
 
-Migrates files from source to destination.  Multiple source/destionations can be used.  Two methods can be used for migrating the data.
+Migrates files from source to destination.  Multiple source/destionations can be used.  Three methods can be used for migrating the data.
 
 
 Set data-migration_mode = 
@@ -62,22 +62,54 @@ ansible.posix collection
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Here's an example using copy mode
 
-    - hosts: servers
+- hosts: servers
 
-      vars:
+  vars:
 
-        data-migration_mode: c
+    data-migration_mode: c
 
-        migration_directories:
-          - src: "{{ data-migration_source_mountpoint }}/pub"
-            dest: /data/
-          - src: "{{ data-migration_source_mountpoint }}/priv"
-            dest: /data
+    migration_directories:
+      - src: "{{ data-migration_source_mountpoint }}/pub"
+        dest: /data/
+      - src: "{{ data-migration_source_mountpoint }}/priv"
+        dest: /data
 
-      roles:
-         - name: data-migration
+  roles:
+    - name: data-migration
+
+Example using synchronize mode
+
+- hosts: servers
+
+  vars:
+
+    data-migration_mode: s
+
+    migration_directories:
+      - src: "{{ data-migration_source_mountpoint }}/pub"
+        dest: /data/
+      - src: "{{ data-migration_source_mountpoint }}/priv"
+        dest: /data
+
+  roles:
+
+    - name: data-migration
+
+
+Example using script mode
+
+- hosts: servers
+
+  vars:
+
+    data-migration_mode: t
+    data_migration_script_filename: copy_script.sh
+    data_migration_script_destination: "/root/{{ data_migration_script_filename }}"
+
+  roles:
+    - name: data-migration
 
 License
 -------
@@ -87,5 +119,4 @@ BSD
 Author Information
 ------------------
 
-N/A
-
+rich ohara
