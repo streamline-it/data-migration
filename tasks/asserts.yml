@@ -3,7 +3,7 @@
     that: 
       - data_migration_mode is defined
       - data_migration_mode is truthy
-      - data_migration_mode == "s' or data_migration_mode == "c" or data_migration_mode == "t"
+      - data_migration_mode == "s" or data_migration_mode == "c" or data_migration_mode == "t"
     fail_msg: "Ensure the data_migration_mode variable is defined and has a correct value"
 
 - name: ensure key variables are defined/have values
@@ -25,5 +25,5 @@
       - data_migration_script_filename is defined
       - data_migration_script_filename is truthy
       - data_migration_script_destination is defined
-      - data_migration_script_destination is truth
-    fail_msg: "Esure scripting values are definded and values are set"y
+      - data_migration_script_destination is truthy
+    fail_msg: "Esure scripting values are definded and values are set"

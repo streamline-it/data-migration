@@ -28,6 +28,8 @@ Make sure the rsync package exists on the control node if you're using rsync to 
 Role Variables
 --------------
 
+Default variables
+
 # data-migration_mode values
 
 #  s = Use syncrhonize module
@@ -40,7 +42,7 @@ data-migration_mode: s
 
 data-migration_script_filename: copy_shell_script.sh
 
-# Where script exists to be executed
+# Script filepath
 data_migration_script_destination: "/root/{{ data_migration_script_filename }}"
 
 # Where data is mounted
@@ -50,10 +52,22 @@ data_migration_source_mountpoint:
 data_migration_directories:
   - src: "{{ data-migration_source_mountpoint }}/"
     dest:
+    owner:
+    group
   - src: "{{ data-migration_source_mountpoint }}/"
     dest:
+    owner:
+    group:
+
+vars
+
+FreeBSD.yml:
+data_migration_shebang: "#!/bin/sh"
 
 
+RedHat.yml
+
+data_migration_shebang: "#!/bin/bash"
 Dependencies
 ------------
 
@@ -64,34 +78,51 @@ Example Playbook
 
 Here's an example using copy mode
 
-- hosts: servers
+* Note the "my_source_location" must exist on the remote host.  This allows this
+  copy operation to be as fast as possible.
 
+- hosts: node5.example.com
+  
   vars:
 
-    data-migration_mode: c
+    my_source_location: /home/migration_directory
 
-    migration_directories:
-      - src: "{{ data-migration_source_mountpoint }}/pub"
-        dest: /data/
-      - src: "{{ data-migration_source_mountpoint }}/priv"
-        dest: /data
+    data_migration_mode: c
+    data_migration_source_mountpoint: "{{ my_source_location }}"
+    data_migration_destination_dirs:
+      - /home/data
+
+    data_migration_directories:
+      - src: "{{ data_migration_source_mountpoint }}"
+        dest: "/home/data"
+        owner: rich
+        group: rich
+
 
   roles:
-    - name: data-migration
+ 
+    - name:  data-migration
 
 Example using synchronize mode
 
+* Note the "my_source_location" must exist on the ansible controller.
+
 - hosts: servers
 
   vars:
 
-    data-migration_mode: s
+    my_source_location: /mnt/nfs/priv/ansible/data
+ 
+    data_migration_mode: s
+    data_migration_source_mountpoint: "{{ my_source_location }}"
+    data_migration_destination_dirs:
+      - /home/data/sync
 
-    migration_directories:
-      - src: "{{ data-migration_source_mountpoint }}/pub"
-        dest: /data/
-      - src: "{{ data-migration_source_mountpoint }}/priv"
-        dest: /data
+    data_migration_directories:
+      - src: "{{ data_migration_source_mountpoint }}"
+        dest: "/home/data/sync"
+        owner: rich
+        group: rich
 
   roles:
 
@@ -104,11 +135,25 @@ Example using script mode
 
   vars:
 
-    data-migration_mode: t
-    data_migration_script_filename: copy_script.sh
-    data_migration_script_destination: "/root/{{ data_migration_script_filename }}"
+
+    my_source_location: /home/migration_directory
+
+    data_migration_mode: t
+    data_migration_script_file_name: script_copy.sh
+    data_migration_script_destination: "/root/{{ data_migration_script_file_name }}"
+
+    data_migration_source_mountpoint: "{{ my_source_location }}"
+    data_migration_destination_dirs:
+      - /home/data/script
+
+    data_migration_directories:
+      - src: "{{ data_migration_source_mountpoint }}"
+        dest: "/home/data/script"
+        owner: rich
+        group: richoles:
 
   roles:
+
     - name: data-migration
 
 License
